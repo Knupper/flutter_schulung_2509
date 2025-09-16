@@ -9,7 +9,11 @@ class AdviceLoadingState extends AdviceState{}
 
 class AdviceErrorState extends AdviceState{}
 
-class AdviceLoadedState extends AdviceState{}
+class AdviceLoadedState extends AdviceState{
+  final String advice;
+
+  AdviceLoadedState({required this.advice});
+}
 
 
 // class AlternativeAdviceState {

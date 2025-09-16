@@ -37,7 +37,6 @@ class _AdvicePage extends StatelessWidget {
         children: [
           Center(child: BlocBuilder<AdviceCubit, AdviceState>(
             builder: (context, state) {
-              print('New state $state');
               switch(state){
                 case AdviceEmptyState():
                   return AdviceEmpty();
@@ -46,10 +45,20 @@ class _AdvicePage extends StatelessWidget {
                 case AdviceErrorState():
                   return AdviceError();
                 case AdviceLoadedState():
-                  return AdviceLoaded(advice: 'advice');
+                  return AdviceLoaded(advice: state.advice);
               }
-          },)),
-          ElevatedButton(onPressed: () => BlocProvider.of<AdviceCubit>(context).fetch(), child: Text('fetch random data')),
+          },),),
+          BlocBuilder<AdviceCubit, AdviceState>(
+            // buildWhen: (previous, current) => previous is AdviceEmptyState && current is AdviceLoadingState, // can be used to reduce ui rebuilds
+            builder: (context, state) {
+              final isLoading = state is AdviceLoadingState;
+              return Column(
+                children: [
+                  ElevatedButton(onPressed: isLoading ? null : () => BlocProvider.of<AdviceCubit>(context).fetch(), child: Text('fetch data')),
+                  ElevatedButton(onPressed: isLoading ? null : () => BlocProvider.of<AdviceCubit>(context).fetchRandom(), child: Text('fetch random data')),
+                ],
+              );
+            },),
         ],
       ),
     );
