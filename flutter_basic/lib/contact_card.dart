@@ -6,11 +6,13 @@ class ContactCard extends StatelessWidget {
   final Contact contact;
 
   // Aufgabe:
-  // Baue eine Visitenkarte die ansprechend Designed ist und die Felder von der Klasse Contact darstellt.
-  // Zusatz: laden der AvatarUrl als Bild
+  // Telefonummer und Mail sollten untereinander anfangen
+  // Mail:            meineMail@web.de
+  // Telefon:         014253541
 
   @override
   Widget build(BuildContext context) {
+    print('build - ${contact.firstAndLastName}');
     return Container(
       decoration: BoxDecoration(border: Border.all(), color: Colors.grey[200], borderRadius: BorderRadius.circular(16)),
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -29,32 +31,30 @@ class ContactCard extends StatelessWidget {
           ),
           Expanded(
             flex: 1,
-            child: Container(
-              color: Colors.purpleAccent,
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    color: Colors.amber,
-                    child: Text(
-                      contact.firstAndLastName,
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                    ),
-                  ),
-                  Text('position' * 33),
-                  Row(children: [Text('tel;'), Text('112133211')]),
-                  Row(children: [Text('mail;'), Text('qasd@web.de')]),
-                  Row(
-                    children: [
-                      Flexible(flex: 9, child: Container(color: Colors.green, height: 50)),
-                      Expanded(flex: 1, child: Container(color: Colors.redAccent, height: 50)),
-                    ],
-                  ),
-                ],
-              ),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  contact.firstAndLastName,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+                Text('position' * 33),
+                _InformationRow(
+                  label: 'Telefon',
+                  child: Text(contact.phoneNumber, style: TextStyle(fontWeight: FontWeight.bold)),
+                ),
+                _InformationRow(
+                  label: 'Mail',
+                  child: Text(contact.mailAdress, style: TextStyle(color: Colors.greenAccent)),
+                ),
+                _InformationRow(
+                  label: 'Tolle Info',
+                  child: Container(color: Colors.redAccent, height: 50),
+                ),
+              ],
             ),
           ),
         ],
@@ -63,10 +63,27 @@ class ContactCard extends StatelessWidget {
   }
 }
 
+class _InformationRow extends StatelessWidget {
+  const _InformationRow({super.key, required this.label, required this.child});
+  final String label;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(flex: 2, child: Text(label)),
+        Expanded(flex: 8, child: child),
+      ],
+    );
+  }
+}
+
 class Contact {
   final String lastName;
   final String firstName;
-  final String postion;
+  final String position;
   final String phoneNumber;
   final String mailAdress;
   final String avatarUrl;
@@ -74,7 +91,7 @@ class Contact {
   Contact({
     required this.lastName,
     required this.firstName,
-    required this.postion,
+    required this.position,
     required this.phoneNumber,
     required this.mailAdress,
     required this.avatarUrl,

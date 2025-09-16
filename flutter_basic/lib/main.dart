@@ -30,13 +30,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  int _itemLength = 0;
 
   void _incrementCounter() {
     setState(() {
-      _counter++;
+      _itemLength++;
     });
   }
+
+  // Aufgabe:
+  // bei jedem Button press auf Floating Action button soll eine weiter Kontaktkarte angezeigt werden
 
   @override
   Widget build(BuildContext context) {
@@ -44,26 +47,36 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(backgroundColor: Theme.of(context).colorScheme.inversePrimary, title: Text(widget.title)),
       body: Center(
         child: Column(
-          children: <Widget>[
-            ContactCard(
-              contact: Contact(
-                lastName:
-                    'lastNamelastNamelastNamelastName!.123 123 123 1.23 123 tNamelastNamelastName!.123 123 123 1.23 123',
-                firstName: 'firstName',
-                postion: 'postion',
-                phoneNumber: 'phoneNumber',
-                mailAdress: 'mailAdress',
-                avatarUrl: 'avatarUrl',
+          children: [
+            Expanded(
+              child: ListView.separated(
+                itemCount: 40,
+                itemBuilder: (context, index) {
+                  return ContactCard(
+                    contact: Contact(
+                      lastName: '$index',
+                      firstName: 'firstName',
+                      position: 'postion',
+                      phoneNumber: 'phoneNumber',
+                      mailAdress: 'mailAdress',
+                      avatarUrl: 'avatarUrl',
+                    ),
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return SizedBox.square(dimension: (index % 2) == 0 ? 16 : 8);
+                },
               ),
             ),
-            const Text('You have pushed the button this many times:'),
-            Text('$_counter', style: Theme.of(context).textTheme.headlineMedium),
+            Expanded(
+              child: Container(color: Colors.amber, child: Text('Statisches Element')),
+            ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
-        tooltip: 'Increment',
+        tooltip: 'Add',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
