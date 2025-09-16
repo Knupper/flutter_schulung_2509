@@ -27,14 +27,35 @@ class ContactCard extends StatelessWidget {
               image: DecorationImage(image: NetworkImage('https://picsum.photos/200')),
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(contact.firstAndLastName, style: TextStyle(fontWeight: FontWeight.bold)),
-              Text('position'),
-              Row(children: [Text('tel;'), Text('112133211')]),
-              Row(children: [Text('mail;'), Text('qasd@web.de')]),
-            ],
+          Expanded(
+            flex: 1,
+            child: Container(
+              color: Colors.purpleAccent,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    color: Colors.amber,
+                    child: Text(
+                      contact.firstAndLastName,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                    ),
+                  ),
+                  Text('position' * 33),
+                  Row(children: [Text('tel;'), Text('112133211')]),
+                  Row(children: [Text('mail;'), Text('qasd@web.de')]),
+                  Row(
+                    children: [
+                      Flexible(flex: 9, child: Container(color: Colors.green, height: 50)),
+                      Expanded(flex: 1, child: Container(color: Colors.redAccent, height: 50)),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),
