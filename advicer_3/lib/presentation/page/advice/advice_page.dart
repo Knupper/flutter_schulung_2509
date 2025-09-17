@@ -35,6 +35,11 @@ class AdvicePage extends StatelessWidget {
 // Aufgabe 2
 // der fetch random data button soll ein zufälliges element zurück geben
 // der fetch 42 button soll immer das element mit der id 42 zurück geben
+
+// Aufgabe 3
+// Baut ein TextField (https://api.flutter.dev/flutter/material/TextField-class.html)
+// Die vom Nutzer eingegebene Zahl auslesen
+// fetch 42 aufruft, das dann die eingegebene Zahl genutzt wird
 class _AdvicePage extends StatelessWidget {
   const _AdvicePage({super.key});
 
@@ -67,12 +72,13 @@ class _AdvicePage extends StatelessWidget {
               return Column(
                 children: [
                   ElevatedButton(
-                    onPressed: isLoading ? null : () => BlocProvider.of<AdviceCubit>(context).fetch(id: '42'),
-                    child: Text('fetch data 42'),
-                  ),
-                  ElevatedButton(
                     onPressed: isLoading ? null : () => BlocProvider.of<AdviceCubit>(context).fetch(),
                     child: Text('fetch random data'),
+                  ),
+                  // add text field
+                  ElevatedButton(
+                    onPressed: isLoading ? null : () => BlocProvider.of<AdviceCubit>(context).fetch(id: '42'),
+                    child: Text('fetch data 42'),
                   ),
                 ],
               );
