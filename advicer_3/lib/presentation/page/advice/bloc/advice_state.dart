@@ -1,25 +1,37 @@
 part of 'advice_cubit.dart';
-sealed class AdviceState {
+
+sealed class AdviceState with EquatableMixin {
   const AdviceState();
+
+  @override
+  List<Object?> get props => [];
 }
 
-class AdviceEmptyState extends AdviceState{}
+class AdviceEmptyState extends AdviceState {
+  const AdviceEmptyState();
+}
 
-class AdviceLoadingState extends AdviceState{}
+class AdviceLoadingState extends AdviceState {
+  const AdviceLoadingState();
+}
 
-class AdviceErrorState extends AdviceState{
-
+class AdviceErrorState extends AdviceState {
   AdviceErrorState({required this.failure});
+
   final Failure failure;
 
+  @override
+  List<Object?> get props => [failure];
 }
 
-class AdviceLoadedState extends AdviceState{
+class AdviceLoadedState extends AdviceState {
   final String advice;
 
   AdviceLoadedState({required this.advice});
-}
 
+  @override
+  List<Object?> get props => [advice];
+}
 
 // class AlternativeAdviceState {
 //   final AdviceUiState uiState;

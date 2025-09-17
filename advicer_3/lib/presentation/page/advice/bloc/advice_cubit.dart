@@ -1,5 +1,6 @@
 import 'package:advicer_3/domain/failures/failure.dart';
 import 'package:advicer_3/domain/use_cases/advice_use_case.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'advice_state.dart';

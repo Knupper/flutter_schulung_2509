@@ -14,3 +14,11 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## Testing
+
+### Arten
+* Unit Tests (cubits, hilfsmethoden)
+* Widget Tests (Ui + interaktionen)
+* Golden Tests (UI auf Pixelbasis)
+* Integrations Tests (E2e frontend + backend)
