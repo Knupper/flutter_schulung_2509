@@ -15,4 +15,19 @@ class AdviceRepositoryMock implements AdviceRepository {
 
     return Future.value(_dummyData[randomIndex]);
   }
+
+  @override
+  Future<AdviceEntity> readById({required String id}) {
+    final parsedInt = int.tryParse(id);
+    if(parsedInt == null){
+      // TODO return failure
+      return Future.value(AdviceEntity(id: '-1', advice: 'FEHLER'));
+    }
+
+    if(parsedInt < _dummyData.length){
+      // TODO return failure
+    }
+
+    return Future.value(_dummyData[parsedInt]);
+  }
 }

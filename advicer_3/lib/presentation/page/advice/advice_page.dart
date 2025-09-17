@@ -67,11 +67,11 @@ class _AdvicePage extends StatelessWidget {
               return Column(
                 children: [
                   ElevatedButton(
-                    onPressed: isLoading ? null : () => BlocProvider.of<AdviceCubit>(context).fetch(),
+                    onPressed: isLoading ? null : () => BlocProvider.of<AdviceCubit>(context).fetch(id: '42'),
                     child: Text('fetch data 42'),
                   ),
                   ElevatedButton(
-                    onPressed: isLoading ? null : () => BlocProvider.of<AdviceCubit>(context).fetchRandom(),
+                    onPressed: isLoading ? null : () => BlocProvider.of<AdviceCubit>(context).fetch(),
                     child: Text('fetch random data'),
                   ),
                 ],

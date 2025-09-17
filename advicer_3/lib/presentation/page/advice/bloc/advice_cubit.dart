@@ -10,17 +10,11 @@ class AdviceCubit extends Cubit<AdviceState> {
 
   final AdviceUseCase useCase;
 
-  void fetch() {
+  void fetch({String? id}) {
     emit(AdviceLoadingState());
     Future.delayed(Duration(seconds: 2), () async {
-      final entity = await useCase.getAdvice();
+      final entity = await useCase.getAdvice(id: id);
       emit(AdviceLoadedState(advice: entity.advice));
     });
-  }
-
-  void fetchRandom(){
-    final randomNumber = Random().nextInt(1000);
-    emit(AdviceLoadingState());
-    Future.delayed(Duration(seconds: 2), () => emit(AdviceLoadedState(advice: randomNumber.toString())));
   }
 }

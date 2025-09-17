@@ -6,8 +6,14 @@ class AdviceUseCase{
 
   final AdviceRepository repository;
 
-  Future<AdviceEntity> getAdvice() async {
-    // space for business logic
-    return await repository.read();
+  Future<AdviceEntity> getAdvice({String? id}) async {
+    // We can validate if id is a valid int or some other id logic here
+
+    if(id == null){
+      return await repository.read();
+    } else {
+      // space for business logic
+      return await repository.readById(id: id);
+    }
   }
 }
