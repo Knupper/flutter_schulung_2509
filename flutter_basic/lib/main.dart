@@ -30,7 +30,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _itemLength = 0;
+  int _itemLength = 1;
 
   void _incrementCounter() {
     setState(() {
@@ -50,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             Expanded(
               child: ListView.separated(
-                itemCount: 40,
+                itemCount: _itemLength,
                 itemBuilder: (context, index) {
                   return ContactCard(
                     contact: Contact(

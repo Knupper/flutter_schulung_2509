@@ -1,3 +1,5 @@
+import 'package:advicer_3/domain/repositories/advice_repository.dart';
+import 'package:advicer_3/domain/use_cases/advice_use_case.dart';
 import 'package:advicer_3/presentation/page/advice/bloc/advice_cubit.dart';
 import 'package:advicer_3/presentation/page/advice/widget/advice_empty.dart';
 import 'package:advicer_3/presentation/page/advice/widget/advice_error.dart';
@@ -6,14 +8,18 @@ import 'package:advicer_3/presentation/page/advice/widget/advice_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AdvicePage extends StatelessWidget{
+class AdvicePage extends StatelessWidget {
   const AdvicePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Advicer App')),
-      body: BlocProvider(create: (context) => AdviceCubit(), child: _AdvicePage(),),
+      body: BlocProvider(
+        create: (context) =>
+            AdviceCubit(useCase: AdviceUseCase(repository: RepositoryProvider.of<AdviceRepository>(context))),
+        child: _AdvicePage(),
+      ),
     );
   }
 }
@@ -26,6 +32,9 @@ class AdvicePage extends StatelessWidget{
 // var intValue = Random().nextInt(10); // Value is >= 0 and < 10.
 
 
+// Aufgabe 2
+// der fetch random data button soll ein zufälliges element zurück geben
+// der fetch 42 button soll immer das element mit der id 42 zurück geben
 class _AdvicePage extends StatelessWidget {
   const _AdvicePage({super.key});
 
@@ -35,30 +44,40 @@ class _AdvicePage extends StatelessWidget {
       padding: EdgeInsetsGeometry.all(64),
       child: Column(
         children: [
-          Center(child: BlocBuilder<AdviceCubit, AdviceState>(
-            builder: (context, state) {
-              switch(state){
-                case AdviceEmptyState():
-                  return AdviceEmpty();
-                case AdviceLoadingState():
-                  return AdviceLoading();
-                case AdviceErrorState():
-                  return AdviceError();
-                case AdviceLoadedState():
-                  return AdviceLoaded(advice: state.advice);
-              }
-          },),),
+          Center(
+            child: BlocBuilder<AdviceCubit, AdviceState>(
+              builder: (context, state) {
+                switch (state) {
+                  case AdviceEmptyState():
+                    return AdviceEmpty();
+                  case AdviceLoadingState():
+                    return AdviceLoading();
+                  case AdviceErrorState():
+                    return AdviceError();
+                  case AdviceLoadedState():
+                    return AdviceLoaded(advice: state.advice);
+                }
+              },
+            ),
+          ),
           BlocBuilder<AdviceCubit, AdviceState>(
             // buildWhen: (previous, current) => previous is AdviceEmptyState && current is AdviceLoadingState, // can be used to reduce ui rebuilds
             builder: (context, state) {
               final isLoading = state is AdviceLoadingState;
               return Column(
                 children: [
-                  ElevatedButton(onPressed: isLoading ? null : () => BlocProvider.of<AdviceCubit>(context).fetch(), child: Text('fetch data')),
-                  ElevatedButton(onPressed: isLoading ? null : () => BlocProvider.of<AdviceCubit>(context).fetchRandom(), child: Text('fetch random data')),
+                  ElevatedButton(
+                    onPressed: isLoading ? null : () => BlocProvider.of<AdviceCubit>(context).fetch(),
+                    child: Text('fetch data 42'),
+                  ),
+                  ElevatedButton(
+                    onPressed: isLoading ? null : () => BlocProvider.of<AdviceCubit>(context).fetchRandom(),
+                    child: Text('fetch random data'),
+                  ),
                 ],
               );
-            },),
+            },
+          ),
         ],
       ),
     );
