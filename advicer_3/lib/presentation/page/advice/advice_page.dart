@@ -31,7 +31,6 @@ class AdvicePage extends StatelessWidget {
 // der eine Methode fetchRandom im cubit aufruft und eine Random zahl zurück gibt
 // var intValue = Random().nextInt(10); // Value is >= 0 and < 10.
 
-
 // Aufgabe 2
 // der fetch random data button soll ein zufälliges element zurück geben
 // der fetch 42 button soll immer das element mit der id 42 zurück geben
@@ -40,8 +39,23 @@ class AdvicePage extends StatelessWidget {
 // Baut ein TextField (https://api.flutter.dev/flutter/material/TextField-class.html)
 // Die vom Nutzer eingegebene Zahl auslesen
 // fetch 42 aufruft, das dann die eingegebene Zahl genutzt wird
-class _AdvicePage extends StatelessWidget {
+class _AdvicePage extends StatefulWidget {
   const _AdvicePage({super.key});
+
+  @override
+  State<_AdvicePage> createState() => _AdvicePageState();
+}
+
+class _AdvicePageState extends State<_AdvicePage> {
+  final _formKey = GlobalKey<FormState>();
+
+  late final TextEditingController _textEditingController;
+
+  @override
+  void initState() {
+    super.initState();
+    _textEditingController = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,24 +79,50 @@ class _AdvicePage extends StatelessWidget {
               },
             ),
           ),
-          BlocBuilder<AdviceCubit, AdviceState>(
-            // buildWhen: (previous, current) => previous is AdviceEmptyState && current is AdviceLoadingState, // can be used to reduce ui rebuilds
-            builder: (context, state) {
-              final isLoading = state is AdviceLoadingState;
-              return Column(
-                children: [
-                  ElevatedButton(
-                    onPressed: isLoading ? null : () => BlocProvider.of<AdviceCubit>(context).fetch(),
-                    child: Text('fetch random data'),
-                  ),
-                  // add text field
-                  ElevatedButton(
-                    onPressed: isLoading ? null : () => BlocProvider.of<AdviceCubit>(context).fetch(id: '42'),
-                    child: Text('fetch data 42'),
-                  ),
-                ],
-              );
-            },
+          Form(
+            key: _formKey,
+            child: BlocBuilder<AdviceCubit, AdviceState>(
+              // buildWhen: (previous, current) => previous is AdviceEmptyState && current is AdviceLoadingState, // can be used to reduce ui rebuilds
+              builder: (context, state) {
+                final isLoading = state is AdviceLoadingState;
+                return Column(
+                  children: [
+                    ElevatedButton(
+                      onPressed: isLoading ? null : () => BlocProvider.of<AdviceCubit>(context).fetch(),
+                      child: Text('fetch random data'),
+                    ),
+                    TextFormField(
+                      controller: _textEditingController,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if(value == null || value.isEmpty){
+                          return 'Required field, please enter a number';
+                        }
+
+                        if(int.tryParse(value) == null){
+                          return 'Only digits are allowed';
+                        }
+
+                        return null;
+                      },
+                    ),
+                    ElevatedButton(
+                      onPressed: isLoading
+                          ? null
+                          : () {
+                            final isValid = _formKey.currentState?.validate() == true;
+
+                            if(isValid) {
+                              BlocProvider.of<AdviceCubit>(context).fetch(id: _textEditingController.value.text);
+                            }
+                          },
+                      child: Text('fetch data'),
+                    ),
+                  ],
+                );
+              },
+            ),
           ),
         ],
       ),
