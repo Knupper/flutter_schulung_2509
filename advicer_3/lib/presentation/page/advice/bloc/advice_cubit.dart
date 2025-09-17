@@ -1,5 +1,4 @@
-import 'dart:math';
-
+import 'package:advicer_3/domain/failures/failure.dart';
 import 'package:advicer_3/domain/use_cases/advice_use_case.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,11 +9,13 @@ class AdviceCubit extends Cubit<AdviceState> {
 
   final AdviceUseCase useCase;
 
-  void fetch({String? id}) {
+  Future<void> fetch({String? id}) async {
     emit(AdviceLoadingState());
-    Future.delayed(Duration(seconds: 2), () async {
-      final entity = await useCase.getAdvice(id: id);
-      emit(AdviceLoadedState(advice: entity.advice));
-    });
+    final entity = await useCase.getAdvice(id: id);
+
+    entity.map(
+      successMapper: (success) => emit(AdviceLoadedState(advice: success.advice)),
+      errorMapper: (error) => emit(AdviceErrorState(failure: error)),
+    );
   }
 }

@@ -1,7 +1,9 @@
 import 'dart:math';
 
 import 'package:advicer_3/domain/entities/advice_entitiy.dart';
+import 'package:advicer_3/domain/failures/failure.dart';
 import 'package:advicer_3/domain/repositories/advice_repository.dart';
+import 'package:multiple_result/multiple_result.dart';
 
 class AdviceRepositoryMock implements AdviceRepository {
   final List<AdviceEntity> _dummyData = List.generate(
@@ -10,24 +12,23 @@ class AdviceRepositoryMock implements AdviceRepository {
   );
 
   @override
-  Future<AdviceEntity> read() {
+  Future<Result<AdviceEntity, Failure>> read() {
     final randomIndex = Random().nextInt(10);
 
-    return Future.value(_dummyData[randomIndex]);
+    return Future.value(Result.success(_dummyData[randomIndex]));
   }
 
   @override
-  Future<AdviceEntity> readById({required String id}) {
+  Future<Result<AdviceEntity, Failure>> readById({required String id}) {
     final parsedInt = int.tryParse(id);
     if(parsedInt == null){
-      // TODO return failure
-      return Future.value(AdviceEntity(id: '-1', advice: 'FEHLER'));
+      return Future.value(Result.error(InvalidInputFailure()));
     }
 
     if(parsedInt < _dummyData.length){
-      // TODO return failure
+      return Future.value(Result.error(OutOfBounceFailure()));
     }
 
-    return Future.value(_dummyData[parsedInt]);
+    return Future.value(Result.success(_dummyData[parsedInt]));
   }
 }

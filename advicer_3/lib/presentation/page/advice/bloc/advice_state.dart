@@ -7,7 +7,12 @@ class AdviceEmptyState extends AdviceState{}
 
 class AdviceLoadingState extends AdviceState{}
 
-class AdviceErrorState extends AdviceState{}
+class AdviceErrorState extends AdviceState{
+
+  AdviceErrorState({required this.failure});
+  final Failure failure;
+
+}
 
 class AdviceLoadedState extends AdviceState{
   final String advice;
