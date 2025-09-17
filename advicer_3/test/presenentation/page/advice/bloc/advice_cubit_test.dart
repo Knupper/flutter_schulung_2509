@@ -11,7 +11,7 @@ class MockAdviceUseCase extends Mock implements AdviceUseCase {}
 void main() {
   group('AdviceCubit', () {
     group('should emit', () {
-      late final MockAdviceUseCase mockAdviceUseCase;
+      late MockAdviceUseCase mockAdviceUseCase;
 
       setUp(() {
         mockAdviceUseCase = MockAdviceUseCase();
