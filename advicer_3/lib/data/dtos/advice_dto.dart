@@ -1,9 +1,10 @@
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'advice_dto.g.dart';
 
 @JsonSerializable()
-class AdviceDto {
+class AdviceDto with EquatableMixin{
   AdviceDto({required this.id, required this.advice});
 
   @JsonKey(name:'advice_id')
@@ -14,6 +15,9 @@ class AdviceDto {
   factory AdviceDto.fromJson(Map<String, dynamic> json) => _$AdviceDtoFromJson(json);
 
   Map<String, dynamic> toJson() => _$AdviceDtoToJson(this);
+
+  @override
+  List<Object?> get props => [advice, id];
 
   // manuelle alternative
   // factory AdviceDto.fromJson(Map<String, dynamic> json) {
