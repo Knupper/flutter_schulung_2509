@@ -39,7 +39,6 @@ class AdvicePage extends StatelessWidget {
 // Baut ein TextField (https://api.flutter.dev/flutter/material/TextField-class.html)
 // Die vom Nutzer eingegebene Zahl auslesen
 // fetch 42 aufruft, das dann die eingegebene Zahl genutzt wird
-@visibleForTesting
 class AdvicePageInternal extends StatefulWidget {
   @visibleForTesting
   const AdvicePageInternal({super.key});
@@ -70,7 +69,7 @@ class _AdvicePageInternalState extends State<AdvicePageInternal> {
               builder: (context, state) {
                 switch (state) {
                   case AdviceEmptyState():
-                    return AdviceEmpty();
+                    return AdviceEmpty(key: Key(AdviceEmpty.adviceEmptyKey),);
                   case AdviceLoadingState():
                     return AdviceLoading();
                   case AdviceErrorState():
@@ -94,6 +93,7 @@ class _AdvicePageInternalState extends State<AdvicePageInternal> {
                       child: Text('fetch random data'),
                     ),
                     TextFormField(
+                      key: Key('id_input'),
                       controller: _textEditingController,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       keyboardType: TextInputType.number,

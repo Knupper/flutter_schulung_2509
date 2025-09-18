@@ -1,5 +1,4 @@
 import 'package:advicer_3/data/data_sources/advice_rest_api.dart';
-import 'package:advicer_3/data/repositories/advice_repository_mock.dart';
 import 'package:advicer_3/domain/repositories/advice_repository.dart';
 import 'package:advicer_3/presentation/page/advice/advice_page.dart';
 import 'package:flutter/material.dart';

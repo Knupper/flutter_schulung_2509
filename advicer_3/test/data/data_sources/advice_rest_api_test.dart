@@ -1,12 +1,7 @@
 import 'package:advicer_3/data/data_sources/advice_rest_api.dart';
 import 'package:advicer_3/data/dtos/advice_dto.dart';
-import 'package:advicer_3/domain/entities/advice_entitiy.dart';
-import 'package:advicer_3/domain/failures/failure.dart';
-import 'package:advicer_3/domain/repositories/advice_repository.dart';
-import 'package:advicer_3/domain/use_cases/advice_use_case.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:multiple_result/multiple_result.dart';
 import 'package:http/http.dart' as http;
 
 class MockHttpClient extends Mock implements http.Client {}
