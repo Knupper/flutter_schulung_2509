@@ -7,10 +7,16 @@ class AdviceLoaded extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: EdgeInsetsGeometry.all(16),
-        child: Text(advice, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+    return Semantics(
+      container: true,
+      hint: 'Advice Loaded',
+      enabled: true,
+      label: 'AdviceCard',
+      child: Card(
+        child: Padding(
+          padding: EdgeInsetsGeometry.all(16),
+          child: SelectableText(advice, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+        ),
       ),
     );
   }
