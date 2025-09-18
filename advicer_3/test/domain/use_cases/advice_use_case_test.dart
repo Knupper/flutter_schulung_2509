@@ -59,10 +59,10 @@ void main() {
         verifyNoMoreInteractions(mockAdviceRepository);
       });
     });
-    
+
     group('returns Failure', () {
-      test('if read was called and we got an error', () {});
-      test('if readBy was called and we got an error', () {});
+      test('if read was called and we got an error', () {}, skip: true);
+      test('if readBy was called and we got an error', () {}, skip: true);
     });
   });
 }

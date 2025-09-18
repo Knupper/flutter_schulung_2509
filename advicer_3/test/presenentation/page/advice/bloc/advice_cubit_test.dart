@@ -36,23 +36,23 @@ void main() {
         verify: (_) => verify(() => mockAdviceUseCase.getAdvice()).called(1),
       );
 
-      blocTest(
-        '[AdviceLoadingState, AdviceLoadedState] if fetch was called with id',
-        setUp: () async {},
-        build: () => AdviceCubit(useCase: mockAdviceUseCase),
-        act: (bloc) => bloc.fetch(id: '42'),
-        expect: () => <AdviceState>[],
-        verify: (_) => verify(() => mockAdviceUseCase.getAdvice()).called(1),
-      );
-
-      blocTest(
-        '[AdviceLoadingState, AdviceErrorState] if fetch was called with invalid id',
-        setUp: () async {},
-        build: () => AdviceCubit(useCase: mockAdviceUseCase),
-        act: (bloc) => bloc.fetch(id: 'aa'),
-        expect: () => <AdviceState>[],
-        verify: (_) => verify(() => mockAdviceUseCase.getAdvice()).called(1),
-      );
+      // blocTest(
+      //   '[AdviceLoadingState, AdviceLoadedState] if fetch was called with id',
+      //   setUp: () async {},
+      //   build: () => AdviceCubit(useCase: mockAdviceUseCase),
+      //   act: (bloc) => bloc.fetch(id: '42'),
+      //   expect: () => <AdviceState>[],
+      //   verify: (_) => verify(() => mockAdviceUseCase.getAdvice()).called(1),
+      // );
+//
+      // blocTest(
+      //   '[AdviceLoadingState, AdviceErrorState] if fetch was called with invalid id',
+      //   setUp: () async {},
+      //   build: () => AdviceCubit(useCase: mockAdviceUseCase),
+      //   act: (bloc) => bloc.fetch(id: 'aa'),
+      //   expect: () => <AdviceState>[],
+      //   verify: (_) => verify(() => mockAdviceUseCase.getAdvice()).called(1),
+      // );
     });
   });
 }

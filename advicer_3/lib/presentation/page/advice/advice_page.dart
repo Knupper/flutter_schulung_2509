@@ -1,3 +1,4 @@
+import 'package:advicer_3/domain/failures/failure.dart';
 import 'package:advicer_3/domain/repositories/advice_repository.dart';
 import 'package:advicer_3/domain/use_cases/advice_use_case.dart';
 import 'package:advicer_3/presentation/page/advice/bloc/advice_cubit.dart';
@@ -69,11 +70,11 @@ class _AdvicePageInternalState extends State<AdvicePageInternal> {
               builder: (context, state) {
                 switch (state) {
                   case AdviceEmptyState():
-                    return AdviceEmpty(key: Key(AdviceEmpty.adviceEmptyKey),);
+                    return AdviceEmpty(key: Key(AdviceEmpty.adviceEmptyKey));
                   case AdviceLoadingState():
                     return AdviceLoading();
                   case AdviceErrorState():
-                    return AdviceError();
+                    return AdviceError(failure: UnknownFailure());
                   case AdviceLoadedState():
                     return AdviceLoaded(advice: state.advice);
                 }
@@ -98,11 +99,11 @@ class _AdvicePageInternalState extends State<AdvicePageInternal> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       keyboardType: TextInputType.number,
                       validator: (value) {
-                        if(value == null || value.isEmpty){
+                        if (value == null || value.isEmpty) {
                           return 'Required field, please enter a number';
                         }
 
-                        if(int.tryParse(value) == null){
+                        if (int.tryParse(value) == null) {
                           return 'Only digits are allowed';
                         }
 
@@ -113,12 +114,12 @@ class _AdvicePageInternalState extends State<AdvicePageInternal> {
                       onPressed: isLoading
                           ? null
                           : () {
-                            final isValid = _formKey.currentState?.validate() == true;
+                              final isValid = _formKey.currentState?.validate() == true;
 
-                            if(isValid) {
-                              BlocProvider.of<AdviceCubit>(context).fetch(id: _textEditingController.value.text);
-                            }
-                          },
+                              if (isValid) {
+                                BlocProvider.of<AdviceCubit>(context).fetch(id: _textEditingController.value.text);
+                              }
+                            },
                       child: Text('fetch data'),
                     ),
                   ],
