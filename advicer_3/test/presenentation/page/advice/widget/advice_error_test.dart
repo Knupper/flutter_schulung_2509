@@ -25,7 +25,7 @@ void main() {
         await widgetTester.pumpWidget(createWidgetUnderTest(child: AdviceError(failure: UnknownFailure(),)));
 
         await expectLater(find.byType(AdviceError), matchesGoldenFile('golden/advice_error.png'));
-      });
+      }, tags: 'golden');
     });
   });
 }

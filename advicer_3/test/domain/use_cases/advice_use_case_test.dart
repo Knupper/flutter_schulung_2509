@@ -41,21 +41,21 @@ void main() {
       test('if readBy was called', () async {
         // setup
         when(
-          () => mockAdviceRepository.read(),
+          () => mockAdviceRepository.readById(id: '22'),
         ).thenAnswer((invocation) => Future.value(Result.success(AdviceEntity(id: '2', advice: '22'))));
 
         //create
         final useCaseUnderTest = AdviceUseCase(repository: mockAdviceRepository);
 
         // act
-        final result = await useCaseUnderTest.getAdvice(id: '42');
+        final result = await useCaseUnderTest.getAdvice(id: '22');
 
         // expect/ verify
         expect(result.isSuccess(), true);
         expect(result.isError(), false);
         expect(result, Result<AdviceEntity, Failure>.success(AdviceEntity(id: '2', advice: '22')));
 
-        verify(() => mockAdviceRepository.readById(id: '42')).called(1);
+        verify(() => mockAdviceRepository.readById(id: '22')).called(1);
         verifyNoMoreInteractions(mockAdviceRepository);
       });
     });
