@@ -8,6 +8,6 @@ class AdviceError extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(color: Colors.red, child: Text('Error: failure.toString()'));
+    return Container(color: Colors.red, child: Text('Error: failure.toString()', style: Theme.of(context).textTheme.bodyLarge,));
   }
 }

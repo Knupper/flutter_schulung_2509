@@ -6,6 +6,6 @@ Widget createWidgetUnderTest({required Widget child}) {
 }
 
 void main() {
-  group('AdviceEmpty', () {
+  group('AdviceLoading', () {
   });
 }

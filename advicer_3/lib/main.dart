@@ -18,7 +18,25 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepositoryProvider<AdviceRepository>(
       create: (context) => AdviceRepositoryRestApi(restApi: AdviceRestApi(client: Client())),
-      child: MaterialApp(home: AdvicePage()),
+      child: MaterialApp(
+        // simple alternative to start your app journey
+        // theme: ThemeData.from(colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.green)),
+        theme: ThemeData(
+          textTheme: TextTheme(bodyLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ButtonStyle(
+              textStyle: WidgetStateProperty.resolveWith((states) {
+                if (states.contains(WidgetState.hovered)) {
+                  return TextStyle(fontSize: 24, fontWeight: FontWeight.bold);
+                }
+                return TextStyle(fontSize: 24);
+              }),
+              backgroundColor: WidgetStatePropertyAll(Colors.greenAccent),
+            ),
+          ),
+        ),
+        home: AdvicePage(),
+      ),
     );
   }
 }

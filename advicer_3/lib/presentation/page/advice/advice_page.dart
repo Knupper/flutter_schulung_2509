@@ -91,6 +91,7 @@ class _AdvicePageInternalState extends State<AdvicePageInternal> {
                   children: [
                     ElevatedButton(
                       onPressed: isLoading ? null : () => BlocProvider.of<AdviceCubit>(context).fetch(),
+                      style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(Colors.blueGrey)),
                       child: Text('fetch random data'),
                     ),
                     TextFormField(
