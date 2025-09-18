@@ -5,6 +5,6 @@ class AdviceEmpty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('Empty State');
+    return Text('Empty State 1');
   }
 }

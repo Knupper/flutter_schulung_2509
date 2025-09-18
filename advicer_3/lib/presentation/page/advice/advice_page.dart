@@ -18,7 +18,7 @@ class AdvicePage extends StatelessWidget {
       body: BlocProvider(
         create: (context) =>
             AdviceCubit(useCase: AdviceUseCase(repository: RepositoryProvider.of<AdviceRepository>(context))),
-        child: _AdvicePage(),
+        child: AdvicePageInternal(),
       ),
     );
   }
@@ -39,14 +39,16 @@ class AdvicePage extends StatelessWidget {
 // Baut ein TextField (https://api.flutter.dev/flutter/material/TextField-class.html)
 // Die vom Nutzer eingegebene Zahl auslesen
 // fetch 42 aufruft, das dann die eingegebene Zahl genutzt wird
-class _AdvicePage extends StatefulWidget {
-  const _AdvicePage({super.key});
+@visibleForTesting
+class AdvicePageInternal extends StatefulWidget {
+  @visibleForTesting
+  const AdvicePageInternal({super.key});
 
   @override
-  State<_AdvicePage> createState() => _AdvicePageState();
+  State<AdvicePageInternal> createState() => _AdvicePageInternalState();
 }
 
-class _AdvicePageState extends State<_AdvicePage> {
+class _AdvicePageInternalState extends State<AdvicePageInternal> {
   final _formKey = GlobalKey<FormState>();
 
   late final TextEditingController _textEditingController;
